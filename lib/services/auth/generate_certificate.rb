@@ -39,7 +39,7 @@ module Services
         private
 
         def parse_certificate(certificate)
-          parsed_cert = OpenSSL::X509::Certificate.new(certificate)
+          OpenSSL::X509::Certificate.new(certificate)
         end
 
         def generate_p12(key, certificate)

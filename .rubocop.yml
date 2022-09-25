@@ -159,3 +159,6 @@ Metrics/MethodLength:
 RSpec/DescribeClass:
   Exclude:
     - 'spec/features/**/*.rb'
+
+Metrics/ParameterLists:
+  Enabled: false

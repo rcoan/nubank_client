@@ -8,7 +8,7 @@ module Utils
       @url_map = HttpClient.get(url: DISCOVERY_URL)
     end
 
-    def url_for(resource_name: resource_name)
+    def url_for(resource_name:)
       @url_map[resource_name]
     end
   end
