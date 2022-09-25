@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+require 'nubank_client'
+puts NubankClient.generate_certificate
