@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'io/console'
 require 'openssl'
 
@@ -6,13 +8,13 @@ module Services
     module GenerateCertificate
       class CollectStdinCustomerData
         def self.call(args)
-          self.new.collect_data(**args)
+          new.collect_data(**args)
         end
 
         def collect_data(url_map:)
           pem_cert_public = OpenSSL::PKey::RSA.generate(2048)
           pem_cert_crypto = OpenSSL::PKey::RSA.generate(2048)
-          url = url_map.url_for(resource_name: "auth_gen_certificates")
+          url = url_map.url_for(resource_name: 'auth_gen_certificates')
 
           user_data = {
             login: login,
@@ -30,13 +32,13 @@ module Services
         private
 
         def login
-          p "Insert your Nubank login (CPF):"
+          p 'Insert your Nubank login (CPF):'
           gets.chomp.strip
         end
 
         def password
-          p "Insert your Nubank password:"
-          STDIN.noecho(&:gets).chomp.strip
+          p 'Insert your Nubank password:'
+          $stdin.noecho(&:gets).chomp.strip
         end
 
         def device_id
@@ -47,11 +49,12 @@ module Services
         end
 
         def authentication_code
-          p "Insert your Nubank password:"
+          p 'Insert your Nubank password:'
           gets.chomp.strip
         end
 
-        def encrypted_code(login:, password:, device_id:, model:, certificate_key:, certificate_key_crypto:, url:)
+        def encrypted_code(login:, password:, device_id:, model:, certificate_key:,
+                           certificate_key_crypto:, url:)
           payload = {
             login: login,
             password: password,
@@ -61,19 +64,18 @@ module Services
             device_id: device_id
           }
 
-
           response = Utils::HttpClient.post_with_raw_response(url: url, payload: payload)
-          header = response[:raw]["WWW-Authenticate"]
+          header = response[:raw]['WWW-Authenticate']
 
-          auth_header_itens = header.split(" ").map do |item|
-            key_value = item.split("=")
-            [key_value[0], key_value[1..].join.gsub('"', '')]
-          end.to_h
-          auth_header_itens["encrypted-code"]
+          auth_header_itens = header.split.to_h do |item|
+            key_value = item.split('=')
+            [key_value[0], key_value[1..].join.delete('"')]
+          end
+          auth_header_itens['encrypted-code']
         end
 
         def tfa_code
-          p "Nubank sent your authentication code to your registered email, type it here:"
+          p 'Nubank sent your authentication code to your registered email, type it here:'
           gets.chomp.strip
         end
       end

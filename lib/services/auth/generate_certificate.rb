@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'openssl'
 
 module Services
@@ -5,10 +7,11 @@ module Services
     module GenerateCertificate
       class GenerateCertificate
         def self.call(args)
-          self.new.generate_certificate(**args)
+          new.generate_certificate(**args)
         end
 
-        def generate_certificate(login:, password:, device_id:, model:, certificate_key:, certificate_key_crypto:, tfa_code:, encrypted_code:, url_map:)
+        def generate_certificate(login:, password:, device_id:, model:, certificate_key:,
+                                 certificate_key_crypto:, tfa_code:, encrypted_code:, url_map:)
           payload = {
             login: login,
             password: password,
@@ -20,13 +23,13 @@ module Services
             encrypted_code: encrypted_code
           }
 
-          url = url_map.url_for(resource_name: "auth_gen_certificates")
+          url = url_map.url_for(resource_name: 'auth_gen_certificates')
 
           response = Utils::HttpClient.post(url: url, payload: payload)
 
           p response
 
-          certificate = parse_certificate(response["certificate"])
+          certificate = parse_certificate(response['certificate'])
 
           {
             certificate: generate_p12(certificate_key, certificate)
@@ -41,7 +44,7 @@ module Services
 
         def generate_p12(key, certificate)
           OpenSSL::PKCS12.create(
-            "pass",
+            'pass',
             "Nubank auth certificate for #{login} at #{device_id}",
             key,
             certificate

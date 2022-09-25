@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'openssl'
 
 module Services
@@ -5,7 +7,7 @@ module Services
     module GenerateCertificate
       class SaveCertificate
         def self.call(args)
-          self.new.save_certificate(**args)
+          new.save_certificate(**args)
         end
 
         def save_certificate(certificate:)
@@ -24,8 +26,8 @@ module Services
         end
 
         def print_warnings
-          p "Certificates generated successfully. (cert.pem)"
-          p "ATTENTION, keep these certificates safe, as they give full access to your account"
+          p 'Certificates generated successfully. (cert.pem)'
+          p 'ATTENTION, keep these certificates safe, as they give full access to your account'
         end
       end
     end

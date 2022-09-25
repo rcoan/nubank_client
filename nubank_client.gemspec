@@ -5,7 +5,7 @@ Gem::Specification.new do |spec|
   spec.version       = '0.0.1'
   spec.authors       = ['']
   spec.email         = ['']
-  spec.platform  = Gem::Platform::RUBY
+  spec.platform = Gem::Platform::RUBY
 
   spec.summary = 'This gem is a nubank API client :)'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.6.4')
@@ -23,4 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'rubocop-performance'
+  spec.add_development_dependency 'rubocop-rspec'
+  spec.metadata['rubygems_mfa_required'] = 'true'
 end
