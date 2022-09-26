@@ -69,8 +69,9 @@ module Services
 
           auth_header_itens = header.split.to_h do |item|
             key_value = item.split('=')
-            [key_value[0], key_value[1..].join.delete('"')]
+            [key_value[0], key_value[1..].join.gsub(/\"|,/, '')]
           end
+
           auth_header_itens['encrypted-code']
         end
 
