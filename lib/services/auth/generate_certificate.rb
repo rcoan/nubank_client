@@ -42,7 +42,7 @@ module Services
 
         def generate_p12(key, certificate, login)
           OpenSSL::PKCS12.create(
-            'pass',
+            '',
             "Nubank auth certificate for #{login}",
             key,
             certificate
