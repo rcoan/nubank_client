@@ -16,6 +16,8 @@ module Services
           pem_cert_crypto = OpenSSL::PKey::RSA.generate(2048)
           url = url_map.url_for(resource_name: 'auth_gen_certificates')
 
+          raise Exceptions::Utils::UrlNotDiscovered, 'auth_gen_certificates' if url.nil?
+
           user_data = {
             login: login,
             password: password,
@@ -43,9 +45,6 @@ module Services
 
         def device_id
           device_id ||= SecureRandom.hex(12)
-          p "generated device id: #{device_id}"
-
-          device_id
         end
 
         def authentication_code
@@ -73,6 +72,8 @@ module Services
           end
 
           auth_header_itens['encrypted-code']
+        rescue
+          raise Exceptions::Auth::BaseAuthenticationFailed
         end
 
         def tfa_code

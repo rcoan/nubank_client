@@ -2,8 +2,12 @@
 
 require './config/loader'
 
-class NubankClient
-  def self.generate_certificate
-    Interactors::Auth::GenerateCertificate.call
+module NubankClient
+  class Cli
+    def self.generate_certificate
+      Interactors::Auth::GenerateCertificate.call
+    rescue StandardError => e
+      e.message
+    end
   end
 end

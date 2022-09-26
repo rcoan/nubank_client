@@ -2,4 +2,4 @@
 # frozen_string_literal: true
 
 require 'nubank_client'
-puts NubankClient.generate_certificate
+puts NubankClient::Cli.generate_certificate

@@ -27,6 +27,8 @@ module Services
 
           response = Utils::HttpClient.post(url: url, payload: payload)
 
+          raise Exceptions::Auth::CertificatExchangeFailed if response['certificate'].nil?
+
           certificate = parse_certificate(response['certificate'])
 
           {
