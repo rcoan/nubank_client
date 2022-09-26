@@ -18,7 +18,7 @@ module Services
         private
 
         def persist_certificates(certificate:)
-          File::open(File.join([Dir.pwd, "nubank_personal_cert.der"]), 'w+b') do |file|
+          File.open(File.join([Dir.pwd, 'nubank_personal_cert.der']), 'w+b') do |file|
             file << certificate.to_der
           end
         end

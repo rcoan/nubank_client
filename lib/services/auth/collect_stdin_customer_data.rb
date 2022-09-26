@@ -68,11 +68,11 @@ module Services
 
           auth_header_itens = header.split.to_h do |item|
             key_value = item.split('=')
-            [key_value[0], key_value[1..].join.gsub(/\"|,/, '')]
+            [key_value[0], key_value[1..].join.gsub(/"|,/, '')]
           end
 
           auth_header_itens['encrypted-code']
-        rescue
+        rescue StandardError
           raise Exceptions::Auth::BaseAuthenticationFailed
         end
 
